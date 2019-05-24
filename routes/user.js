@@ -1,16 +1,14 @@
-module.exports = function (app, sequelizeInstance) {
-  // user model
-  const userModel = require('../Models/userModel');
-  // user model instance
-  const userModelInstance = sequelizeInstance.define('testUsers', userModel, { freezeTableName: true })
-  const userCtrl = require('../Controllers/userController/userController')(userModelInstance);
-
-  app.route('/user')
-    .get(userCtrl.getUsers)
-    .post(userCtrl.createUser)
-    .delete(userCtrl.deleteUser)
+const userRoutes = function (app, dbInstance) {
+  const userController = require('../Controllers/users-mongo')();
 
   app.route('/user/auth')
-    .post(userCtrl.authUser)
+    .post(userController.authUser)
+
+  app.route('/user')
+    .get(userController.getUsers)
+    .post(userController.createUser)
+    .delete(userController.deleteUser)
 
 }
+
+module.exports = userRoutes
