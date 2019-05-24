@@ -1,10 +1,7 @@
 var jwt = require('jsonwebtoken')
 
-const { SECRET_PHRASE } = process.env
-
-const generateToken = (data) => {
-  return jwt.sign(data, SECRET_PHRASE, { expiresIn: "8h" });
-}
+const SECRET_PHRASE = process.env.SECRET_PHRASE || 'TESTsECRETphrase'
+const generateToken = (data) => jwt.sign(data, SECRET_PHRASE, { expiresIn: "8h" });
 
 const isTokenValid = async function (token) {
   return new Promise((resolve, reject) => {
@@ -20,6 +17,7 @@ const isTokenValid = async function (token) {
 
 const tokenValidationMiddleware = async function (req, res, next) {
   let tokenSource = "";
+
   //if the user is trying to authenticate allow him
   if (req.originalUrl && req.originalUrl === "/user/auth") {
     return next()
@@ -37,17 +35,20 @@ const tokenValidationMiddleware = async function (req, res, next) {
   }
 
   try {
-    let response = await isTokenValid(tokenSource);
+    const response = await isTokenValid(tokenSource);
     next();
   }
   catch (err) {
-    return res.status(401).send({ "error": "invalid token", "data": [], "token": "invalid" })
+    return res.status(401).send({
+      error: "invalid token",
+      data: [],
+      token: "invalid"
+    })
   }
-
 }
 
 module.exports = {
-  "generateToken": generateToken,
-  "isTokenValid": isTokenValid,
-  "tokenValidationMiddleware": tokenValidationMiddleware
+  generateToken: generateToken,
+  isTokenValid: isTokenValid,
+  tokenValidationMiddleware: tokenValidationMiddleware
 };
