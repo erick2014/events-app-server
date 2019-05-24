@@ -1,12 +1,8 @@
-
-const corser = require('corser');
-const Sequelize = require('sequelize');
-const bodyParser = require('body-parser');
+// @vendors
 const connectionConfig = require('./utils/dbConnection')
 const mongoose = require('mongoose');
 
-// auth stuff
-var auth = require('./Controllers/authController.js')
+// @config
 const server = require('./server');
 
 if (process.env.DB_TYPE === 'mysql') {
@@ -25,8 +21,11 @@ if (process.env.DB_TYPE === 'mysql') {
 if (process.env.DB_TYPE === 'mongo') {
   const mongoConfig = connectionConfig.getMongoDbConfig()
   mongoose.connect(mongoConfig.connectionString, mongoConfig.configOptions)
-    .then(resp => console.log('connection success ??'))
-    .catch(err => console.log('error in connection '))
+    .then(() => {
+      console.log('connection success...')
+      server()
+    })
+    .catch(err => console.log('error in connection ', err))
   return true;
 }
 
