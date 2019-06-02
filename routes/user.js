@@ -1,5 +1,9 @@
-const userRoutes = function (app, dbInstance) {
-  const userController = require('../Controllers/users-mongo')();
+const userRoutes = function (app) {
+  const userModel = require('../Models/user-model-mongo');
+  const models = {
+    userModel: userModel
+  }
+  const userController = require('../Controllers/users-mongo')(models);
 
   app.route('/user/auth')
     .post(userController.authUser)

@@ -24,8 +24,7 @@ const getMongoDbConfig = () => {
     MONGO_DB_PASSWORD,
     MONGO_DB_USER,
   } = process.env
-
-  const connectionString = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASSWORD}@eventsappdb-eh53e.mongodb.net/test?retryWrites=true`
+  const connectionString = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASSWORD}@cluster0-gfz92.mongodb.net/test?retryWrites=true&w=majority`
   return {
     connectionString: connectionString,
     configOptions: { useNewUrlParser: true, dbName: MONGO_DB_NAME }
