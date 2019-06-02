@@ -31,7 +31,7 @@ const server = (dbInstance = null) => {
   }
 
   // Routes
-  require('./routes/user')(app, dbInstance);
+  require('./routes/user')(app);
 
   app.listen(4000);
 
