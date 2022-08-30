@@ -16,7 +16,7 @@
     "express": "^4.15.2",
     "express-jwt": "^5.3.0",
     "jsonwebtoken": "^7.4.1",
-    "moment-timezone": "^0.5.16",
+    "moment-timezone": "^0.5.35",
     "mongoose": "^5.5.11",
     "mysql2": "^1.5.3",
     "pm2": "^2.6.1",
